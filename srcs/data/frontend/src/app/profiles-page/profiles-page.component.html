@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<div class="container-global">
+
+  <div class="container" *ngIf="all_users">
+    <h1 *ngIf="all_users.length === 0">
+      You are alone :p
+    </h1>
+    <h2 *ngFor="let user of all_users">
+      <div class="box">
+        <div class="top">
+          <div
+            class="profile"
+            [style.background]="'url(' + user.avatar + ') center/cover'"
+            [ngClass]="{
+              'offline-status': user.status === 0,
+              'online-status': user.status === 1,
+              'ingame-status': user.status === 2
+            }"
+          ></div>
+          <h1 class="title">{{ user.username }}</h1>
+        </div>
+        <div class="bottom">
+          <div class="links">
+            <ul>
+              <li>
+                <i
+                  class="fa fa-circle"
+                  [ngClass]="{
+                    red: user.status === 0,
+                    green: user.status === 1,
+                    orange: user.status === 2
+                  }"
+                ></i>
+                {{
+                  user.status === 0
+                    ? "Offline"
+                    : user.status === 1
+                    ? "Online"
+                    : "In Game"
+                }}
+                <p>
+                  {{
+                    user.status === 0
+                      ? "Since " + (user.last_online_date | date : "short")
+                      : user.status === 1
+                      ? ""
+                      : ""
+                  }}
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="social-links">
+            <ul>
+              <li>
+                <a class="add-friend-icon" (click)="addFriend(user)">
+                  <span class="material-symbols-outlined">
+                    {{
+                      friendStatus(user.id) === 0
+                        ? "person_add"
+                        : friendStatus(user.id) === 1
+                        ? "person_remove"
+                        : friendStatus(user.id) === 2
+                        ? "schedule"
+                        : "question_mark"
+                    }}
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="show-profile-icon"
+                  [routerLink]="'/single-profile/' + user.username"
+                >
+                  <span class="material-symbols-outlined"> visibility </span>
+                </a>
+              </li>
+              <li>
+                <a class="block-icon" (click)="blockUser(user)">
+                  <span
+                    class="material-symbols-outlined"
+                    [ngClass]="{ 'active-block': isBlocked(user.id) }"
+                  >
+                    block
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a class="chat-icon" (click)="sendMessage(user)">
+                  <span class="material-symbols-outlined"> chat </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </h2>
+  </div>
+</div>

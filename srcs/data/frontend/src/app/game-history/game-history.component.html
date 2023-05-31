@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<div class="container-global">
+    <h1>Game history</h1>
+    <div class="container" *ngIf="userHistory">
+      <h2 *ngFor="let game of userHistory;">
+        <div class="profile-card__cnt js-profile-cnt">
+            <!-- <div class="profile-card__name">Rank : {{indexOfelement + 1}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ userStat.user && userStat.user.username }}</div> -->
+            <div class="profile-card-inf">
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-games">
+                  {{ game && game.user1 }}
+                </div>
+                <div class="profile-card-inf__txt">Player 1</div>
+              </div>
+      
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-wins">
+                  {{ game && game.user2 }}
+                </div>
+                <div class="profile-card-inf__txt">Player 2</div>
+              </div>
+      
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-losses">
+                  {{ game.game.score_player1 }}
+                </div>
+                <div class="profile-card-inf__txt">Score player 1</div>
+              </div>
+      
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-losses">
+                  {{ game.game.score_player2 }}
+                </div>
+                <div class="profile-card-inf__txt">Score player 2</div>
+              </div>
+            </div>
+        </div>
+    </h2>
+</div>
+</div>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<div class="wrapper" *ngIf="all_requests.length !== 0">
+  <div class="profile-card js-profile-card" *ngFor="let request of all_requests">
+    <div class="profile-card__cnt js-profile-cnt">
+      <div class="profile-card-info">
+        <img
+          [src]="request.user.avatar"
+        />
+        <h3>{{ request.user.username }}</h3>
+      </div>
+
+      <button class="profile-card__button button--green js-message-btn" (click)="acceptRequest(request)">
+        Accept
+      </button>
+      <button class="profile-card__button button--red js-message-btn" (click)="declineRequest(request)">
+        Decline
+      </button>
+    </div>
+  </div>
+</div>
+<div class="wrapper" *ngIf="all_requests.length === 0">
+  <h1>No friend requests :(</h1>
+</div>

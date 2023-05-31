@@ -1,0 +1,206 @@
+.container-global {
+    padding-top: 150px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+$box_width : 250px;
+$box_height : 350px;
+$box_bRadius : 10px;
+$box_background : white;
+$box_shadow : 0px 0px 10px rgba(0,0,0,0.2);
+$text_color: black;
+$links_color: #626262;
+$bottom_box_bg : #F5F5F5;
+
+@mixin createBox($width, $height, $radius, $background, $shadow) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  background-color: $background;
+  box-shadow: $shadow;
+}
+
+p {
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 200;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  .box{
+    margin: 19px;
+    position: relative;
+    @include createBox($box_width, $box_height, $box_bRadius, $box_background, $box_shadow);
+    .top{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 50%;
+      border-top-left-radius: $box_bRadius;
+      border-top-right-radius: $box_bRadius;
+      #star{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 30px;
+        left: 75%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: .5s;
+        text-decoration: none;
+        z-index: 3;
+
+        &:hover{
+          box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+          background-color: white;
+          .ico{
+            color: #FFAE00;
+          }
+        }
+
+        .ico{
+          text-align: center;
+          font-size: 18px;
+          color: $links_color;   
+          transition: .5s;
+        }
+
+      }
+
+      .profile, .title, .job{
+        margin: 5px;
+      }
+
+      .profile{
+        width: 80px;
+        height: 80px;
+        box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+        border-radius: 45%;
+        z-index: 2;
+      }
+
+      .title{
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .job {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+    .bottom{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      height: 50%;
+      background-color: $bottom_box_bg;
+      border-bottom-left-radius: $box_bRadius;
+      border-bottom-right-radius: $box_bRadius;
+
+      .links ul{
+        text-align: center;
+        li{
+          padding: 5px;
+        }
+        a{
+          color: $links_color;
+          font-size: 15px;
+          text-decoration: none;
+          &:hover{
+            text-decoration: underline;
+          }
+        }
+
+
+      }
+      .social-links ul{
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 60px;
+        li{
+          padding: 10px;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
+.add-friend-icon,
+.block-icon,
+.show-profile-icon,
+.chat-icon
+ {
+    transition: .2s;
+}
+
+.add-friend-icon:hover {
+    cursor: pointer;
+    color: #50E3B3 !important;
+}
+
+.block-icon:hover {
+    cursor: pointer;
+    color: rgb(255, 27, 27) !important;
+    filter: brightness(85%);
+}
+
+.show-profile-icon:hover,
+.chat-icon:hover {
+    cursor: pointer;
+    color: #2c8eec !important;
+}
+
+
+.active-block {
+    color: rgb(255, 27, 27);
+}
+
+.online-status {
+  border: 4px solid rgb(18, 196, 72);
+}
+
+.offline-status {
+  border: 4px solid rgb(255, 27, 27);
+}
+
+.ingame-status {
+  border: 4px solid rgb(243, 168, 57);
+}
+
+.green{
+  color: rgb(18, 196, 72);
+  font-size: 15px;
+  padding-right: 5px;
+}
+
+.red{
+  color: rgb(255, 27, 27);
+  font-size: 15px;
+  padding-right: 5px;
+}
+
+.orange{
+  color: rgb(243, 168, 57);
+  font-size: 15px;
+  padding-right: 5px;
+}
+
+a,
+a:visited {
+  color: black;
+}

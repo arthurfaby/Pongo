@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<div id="AllContainer">
+	<div id="frame">
+		<div id="sidepanel">
+			<div id="profile">
+				<div class="wrap" *ngIf="user">
+					<button class="profileButton" (click)="goToProfile()"><img id="profile-img" src="{{user.avatar}}" class="online" alt="" /></button>
+					<button class="helperButton" (click)="openHelper()"><p>Helper</p></button>
+					<dialog class="dialogHelper">
+						<h1>Commands in chat:</h1>
+						<p>To invite in a channel:</p>
+						<p>/invite [Channel Name]</p>
+						<p>To invite in a game:</p>
+						<p>/game</p>
+						<button class="closeButton" (click)="closeButton()">Close</button>
+					</dialog>
+				</div>
+			</div>
+			<div id="contacts">
+				<ul>
+					<li *ngFor="let chan of channelsList" class="liChan">
+						<div class="wrap">
+							<a routerLink="/chat/{{chan.channel_id}}">
+								<div class="meta">
+									<img class="chanPicture" src="../../assets/channel_icon.png" alt="">
+									<p class="chanName" *ngIf="chan.mode==2"><span class="material-symbols-outlined">lock</span>{{chan.name}}</p>
+									<p class="chanName" *ngIf="chan.mode==1"><span class="material-symbols-outlined">password</span>{{chan.name}}</p>
+									<p class="chanName" *ngIf="chan.mode==0">{{chan.name}}</p>
+									<p class="chanName" *ngIf="chan.mode==3"><span class="material-symbols-outlined">password</span>{{chan.name}}</p>
+								</div>
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="bottom-bar">
+				<div class="centerpoint">
+					<dialog class="dialogChannel">
+						<form (ngSubmit)="submitChan()">
+							<p>NAME: </p>
+							<input type="text" placeholder="Channel name..." id="nameInput" class="nameInput"/>
+							<p *ngIf="selectMode && selectMode.value=='protected'">PASSWORD (Required if protected): </p>
+							<input type="password" placeholder="Password..." id="passwordInput" class="passwordInput" *ngIf="selectMode && selectMode.value=='protected'"/>
+							<p>MODE: </p>
+							<select class="selectMode">
+								<option value="public">Public</option>
+								<option value="protected">Protected</option>
+								<option value="private">Private</option>
+							</select>
+						</form>
+						<button class="submitChan" (click)="submitChan()"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i><span>Add channel</span></button>
+						<button class="cancelButton" (click)="cancelButton()">Cancel</button>
+					</dialog>
+					<dialog class="dialogPass">
+						<form (ngSubmit)="submitPass()">
+							<p>PASSWORD: </p>
+							<input type="password" placeholder="Password..." id="passInput" class="passInput"/>
+						</form>
+						<button class="submitPass" (click)="submitPass()"><span>Join the channel</span></button>
+						<button class="closePass" (click)="closePass()">Cancel</button>
+					</dialog>
+				</div>
+				<a id="addcontact" (click)="openDialog()"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i><span>Add channel</span></a>
+			</div>
+		</div>
+		<div class="content" *ngIf="user">
+			<div class="contact-profile" *ngIf="activeChan">
+				<p>{{activeChan.name}}</p>
+				<button *ngIf="modeStatus && modeStatus.user_status != 0" (click)="openEdit()" class="editButton">Edit Channel</button>
+			</div>
+			<dialog class="dialogEdit">
+				<form (ngSubmit)="submitEdit()">
+					<p>NAME: </p>
+					<input type="text" placeholder="Channel name..." id="editNameInput" class="editNameInput"/>
+					<p *ngIf="editSelectMode && editSelectMode.value=='protected'">PASSWORD: </p>
+					<input type="password" placeholder="Password..." id="editPasswordInput" class="editPasswordInput" *ngIf="editSelectMode && editSelectMode.value=='protected'"/>
+					<p>MODE: </p>
+					<select class="editSelectMode">
+						<option value="public">Public</option>
+						<option value="protected">Protected</option>
+						<option value="private">Private</option>
+					</select>
+				</form>
+				<button class="submitEdit" (click)="submitEdit()"><span>Edit Channel</span></button>
+				<button class="closeEdit" (click)="closeEdit()">Cancel</button>
+				<ul *ngIf="mbrChan && mbrChan.length != 0">
+					<input type="number" placeholder="Mute time (in seconds)" class="inputMuteTime" value="0">
+					<li *ngFor="let mbr of mbrChan">
+						<p>{{mbr.user.username}}</p>
+						<button (click)="muteUser(mbr.member)">Mute</button>
+						<button (click)="kickUser(mbr.member)">Kick</button>
+						<button (click)="banUser(mbr.member)">Ban</button>
+						<button (click)="unbanUser(mbr.member)">Unban</button>
+						<button *ngIf="modeStatus && modeStatus.user_status == 2" (click)="promoteUser(mbr.member)">Promote</button>
+						<button *ngIf="modeStatus && modeStatus.user_status == 2" (click)="unpromoteUser(mbr.member)">Unpromote</button>
+					</li>
+				</ul>
+			</dialog>
+			<div id="messages" class="messages">
+				<ul>
+					<li class="sent" *ngFor="let info of infos" [ngStyle]="(info.message.sender_id == user.id)?{'text-align': 'right'} : {'text-align': 'left'}">
+						<a class="userInfos" routerLink="/single-profile/{{info.sender.username}}" [ngStyle]="(info.message.sender_id == user.id)?{'float': 'right'}:{}">
+							<img src="{{info.sender.avatar}}" alt="" class="ppMessage"/>
+							<h1>{{info.sender.username}}</h1>
+						</a>
+						<p *ngIf="info.gameInvite == false && info.invite == false">{{info.message.content}}</p>
+						<p *ngIf="info.gameInvite == true"><a class="inviteMessage" (click)="joinGame(info.sender.id)">Join a game with me :D</a></p>
+						<p *ngIf="info.invite == true"><button class="inviteMessage" (click)='channelAcceptInvite(info.chan)'>Click on this link to join my private channel to talk with me :D</button></p>
+					</li>
+				</ul>
+			</div>
+			<div class="message-input" *ngIf="joined == true && modeStatus && modeStatus.mute_status == false">
+				<div class="wrap">
+					<form (ngSubmit)="onSubmit()">
+						<input type="text" placeholder="Write your message..." id="messageInput"/>
+						<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+					</form>
+				</div>
+			</div>
+			<div class="channelQuit-wrap" *ngIf="activeChan && joined == true">
+				<div class="channelQuit-div">
+						<button (click)="channelQuit()">Quit the channel</button>
+				</div>
+			</div>
+			<div class="channelJoin-wrap" *ngIf="activeChan && joined == false && activeChan.mode != 2">
+				<div class="channelJoin-div">
+						<button *ngIf="activeChan.mode == 0" (click)="channelJoin()">Join the channel</button>
+						<button *ngIf="activeChan.mode == 1" (click)="askPassword()">Enter the password</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

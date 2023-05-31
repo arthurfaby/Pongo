@@ -1,0 +1,351 @@
+#AllContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 150px;
+}
+#frame {
+	box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.9);
+	width: 80%;
+	min-width: 360px;
+	max-width: 1920px;
+	height: 80vh;
+	min-height: 300px;
+	max-height: 820px;
+	background: #E6EAEA;
+	@media screen and (max-width: 360px) {
+			width: 100%;
+			height: 100vh;
+	}
+	
+	#sidepanel {
+		float: left;
+		min-width: 280px;
+		max-width: 340px;
+		width: 40%;
+		height: 100%;
+		background: #2c3e50;
+		color: #f5f5f5;
+		overflow: hidden;
+		position: relative;
+		@media screen and (max-width: 890px) {
+			width: 58px;
+			min-width: 58px;
+		}
+		
+		#profile {
+			width: 80%;
+			margin: 25px auto;
+			@media screen and (max-width: 890px) {
+				width: 100%;
+				margin: 0 auto;
+				padding: 5px 0 0 0;
+				background: #32465a;
+			}
+			
+			.wrap {
+				height: 80px;
+				line-height: 60px;
+				overflow: hidden;
+				@media screen and (max-width: 890px) {
+					height: 80px;
+				}
+				
+				img {
+					object-fit: cover;
+					width: 75px;
+					border-radius: 50%;
+					padding: 3px;
+					height: 75px;
+					float: left;
+					cursor: pointer;
+					@media screen and (max-width: 890px) {
+						width: 40px;
+						margin-left: 4px;
+					}
+				}
+				.profileButton {
+					background-color: transparent;
+					border: transparent;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					text-align: center;
+					float: left;
+				}
+				.helperButton {
+					text-align: center;
+					display: flex;
+					float: right;
+				}
+				.dialogHelper {
+					top: 30%;
+					left: 30%;
+					width: 30vw;
+					height: 30vh;
+					text-align: center;
+					vertical-align: middle;
+					line-height: 3vh;
+					float: left;
+					margin-left: 15px;
+					font-size: 20px;
+				}
+			}
+		}
+		
+		#contacts {
+			height: calc(100% - 177px);
+			overflow-y: scroll;
+			overflow-x: hidden;
+			li {
+				height: 7vh;
+				padding-left: 50px;
+				padding-top: 20px;
+				span {
+					color: black;
+					width: 20px;
+					margin: 5px;
+				}
+				.chanPicture {
+					border-radius: 25%;
+					max-width: 15%;
+					height: auto;
+					float: left;
+				}
+			}
+			
+			p {
+				float: left;
+				font-size: 20px;
+				color: red;
+				text-align: center;
+				padding:  3%;
+			}
+		}
+		
+		#bottom-bar {
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			
+			.dialogPass {
+				top: 30%;
+				left: 30%;
+				width: 30vw;
+				height: 30vh;
+				text-align: center;
+				vertical-align: middle;
+				line-height: 3vh;
+				float: left;
+				margin-left: 15px;
+				font-size: 20px;
+			}
+			.dialogChannel {
+				top: 30%;
+				left: 30%;
+				width: 30vw;
+				height: 30vh;
+				text-align: center;
+				vertical-align: middle;
+				line-height: 3vh;
+			}
+
+			a {
+				float: left;
+				text-align: center;
+				border: none;
+				width: 100%;
+				padding: 10px 0;
+				background: #32465a;
+				color: #f5f5f5;
+				cursor: pointer;
+				font-size: 0.85em;
+				font-family: "Poppins", sans-serif;
+				@media screen and (max-width: 890px) {
+					float: none;
+					width: 100%;
+					padding: 15px 0;
+				}
+				
+				&:focus {
+					outline: none;
+				}
+				
+				&:nth-child(1) {
+					border-right: 1px solid #2c3e50;
+					@media screen and (max-width: 890px) {
+						border-right: none;
+						border-bottom: 1px solid #2c3e50;
+					}
+				}
+				
+				&:hover {
+					background: #435f7a;
+				}
+				
+				i {
+					margin-right: 3px;
+					font-size: 1em;
+					@media screen and (max-width: 890px) {
+						font-size: 1.3em;	
+					}
+				}
+				
+				span {
+					@media screen and (max-width: 890px) {
+						display: none;	
+					}
+				}
+			}
+		}
+	}
+	
+	.content {
+		float: right;
+		width: 60%;
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+		@media screen and (max-width: 890px) {
+			width: calc(100% - 58px);		
+			min-width: 300px !important;
+		}
+		@media screen and (min-width: 900px) {
+			width: calc(100% - 340px);
+		}
+		
+		.channelJoin-div {
+			width: 100%;
+			button {
+				width: 100%;
+			}
+		}
+		.channelQuit-div {
+			width: 15%;
+			margin-left: 85%;
+			button {
+				width: 100%;
+			}
+		}
+		.dialogEdit {
+			top: 15%;
+			left: 15%;
+			width: 70vw;
+			height: 70vh;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 3vh;
+			float: left;
+			margin-left: 15px;
+			font-size: 20px;
+		}
+		.contact-profile {
+			width: 100%;
+			height: 60px;
+			line-height: 60px;
+			background: #f5f5f5;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+
+		}
+		
+		.messages {
+			height: auto;
+			min-height: calc(100% - 93px);
+			max-height: calc(100% - 93px);
+			overflow-y: scroll;
+			overflow-x: hidden;
+			@media screen and (max-width: 890px) {
+				max-height: calc(100% - 105px);
+			}
+
+			ul {
+				li {
+					display: inline-block;
+					clear: both;
+					margin: 15px 15px 5px 15px;
+					width: calc(100% - 25px);
+					font-size: 0.9em;
+
+					&.sent {
+						a, a:link, a:active, a:visited, a:hover{
+							color: #243140;
+						}
+
+						p {
+							background: #435f7a;
+							color: #f5f5f5;
+						}
+						.ppMessage {
+							width: 40px;
+							height: 40px;
+							object-fit: cover;
+							border-radius: 50%;
+						}
+					}
+					
+					p {
+						display: inline-block;
+						padding: 10px 15px;
+						border-radius: 20px;
+						max-width: 205px;
+						line-height: 130%;
+						@media screen and (min-width: 890px) {
+							max-width: 300px;
+						}
+					}
+				}
+			}
+		}
+		
+		.message-input {
+			position: absolute;
+			bottom: 0;
+			width: 85%;
+			z-index: 99;
+			
+			.wrap {
+				position: relative;
+			
+				input {
+					font-family: "Poppins", sans-serif;
+					float: left;
+					border: none;
+					width: calc(100% - 50px);
+					padding: 11px 32px 10px 8px;
+					font-size: 1em;
+					color: #32465a;
+					@media screen and (max-width: 890px) {
+						padding: 15px 32px 16px 8px;
+					}
+
+					&:focus {
+						outline: none;
+					}
+				}
+				button {
+					float: right;
+					border: none;
+					width: 50px;
+					padding: 12px 0;
+					cursor: pointer;
+					background: #32465a;
+					color: #f5f5f5;
+					@media screen and (max-width: 890px) {
+						padding: 16px 0;
+					}
+					
+					&:hover {
+						background: #435f7a;
+					}
+					
+					&:focus {
+						outline: none;
+					}
+				}
+			}
+		}
+	}
+}

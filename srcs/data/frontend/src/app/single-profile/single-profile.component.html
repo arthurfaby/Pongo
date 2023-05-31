@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<div class="wrapper">
+    <div class="profile-card js-profile-card"  *ngIf="user">
+      <div
+        class="profile-card__img"
+        [ngClass]="{
+          'online-status': user && user.status === 1,
+          'offline-status': user && user.status === 0,
+          'ingame-status': user && user.status === 2
+        }"
+      >
+        <img [src]="user && user.avatar" alt="profile card" />
+      </div>
+  
+      <div class="profile-card__cnt js-profile-cnt">
+        <div class="profile-card__name">{{ user && user.username }}</div>
+  
+        <div class="profile-card-inf">
+          <div class="profile-card-inf__item">
+            <div class="profile-card-inf__title profile-card-inf-games">
+              {{ stats && stats.wins + stats.losses }}
+            </div>
+            <div class="profile-card-inf__txt">Games</div>
+          </div>
+  
+          <div class="profile-card-inf__item">
+            <div class="profile-card-inf__title profile-card-inf-wins">
+              {{ stats && stats.wins }}
+            </div>
+            <div class="profile-card-inf__txt">Wins</div>
+          </div>
+  
+          <div class="profile-card-inf__item">
+            <div class="profile-card-inf__title profile-card-inf-losses">
+              {{ stats && stats.losses }}
+            </div>
+            <div class="profile-card-inf__txt">Losses</div>
+          </div>
+  
+          <div class="profile-card-inf__item">
+            <div
+              class="profile-card-inf__title"
+              [ngClass]="
+                stats && stats.wins + stats.losses !== 0
+                  ? stats.wins / (stats.wins + stats.losses) < 0.5
+                    ? 'profile-card-inf-negative-ratio'
+                    : 'profile-card-inf-positive-ratio'
+                  : 'profile-card-inf-positive-ratio'
+              "
+            >
+              {{
+                stats && stats.wins + stats.losses !== 0
+                  ? (stats.wins / (stats.wins + stats.losses) | percent : "1.0-1")
+                  : "-"
+              }}
+            </div>
+            <div class="profile-card-inf__txt">Winrate</div>
+          </div>
+        </div>
+        <div class="profile-card-ctr">
+          <button class="profile-card__button button--blue js-message-btn">
+            <a
+            routerLink='/history'
+            [queryParams]="{id: user.id}"
+            >Game History</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

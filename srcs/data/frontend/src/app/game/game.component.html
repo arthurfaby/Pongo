@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<div class="container">
+    <canvas id="canvas" width="800" height="500"></canvas>
+    <div class="btn">
+      <button class="profile-card__button button--blue js-message-btn" id="btn1" (click)="joinGame(0)"> Join game (original map)</button>
+      <button class="profile-card__button button--blue js-message-btn" id="btn2" (click)="joinGame(1)"> Join game (obstacle map)</button>  
+      <button *ngIf="status == 5" class="profile-card__button button--blue js-message-btn" id="btn3" (click)="cancelQueue()"> Cancel waiting queue</button>  
+    </div>
+</div>

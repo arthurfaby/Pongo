@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<div class="wrapper" *ngIf="user">
+  <div class="profile-form" *ngIf="form_visible">
+    <form #profileForm="ngForm" (ngSubmit)="onSubmitForm(profileForm)">
+      <label for="username">Username* :</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="form_username"
+        value="form_username"
+      /><br />
+
+      <label for="avatar">Avatar* :</label>
+      <input
+        type="text"
+        id="avatar"
+        name="avatar"
+        [(ngModel)]="form_avatar"
+        value="form_avatar"
+      /><br />
+
+      <h3>2FA :</h3>
+      <!-- <label for="2fa">2FA :</label> -->
+      <input type="radio" name="rdo" id="yes" />
+      <input type="radio" name="rdo" id="no" checked/>
+      <div class="switch">
+        <label for="yes">Yes</label>
+        <label for="no">No</label>
+        <span></span>
+      </div>
+
+      <div class="form-buttons">
+        <input
+          type="submit"
+          value="Save"
+          class="form-button form-button-save"
+        />
+        <input
+          value="Cancel"
+          class="form-button form-button-cancel"
+          (click)="toggleFormProfile()"
+        />
+      </div>
+      <p>*Leave empty if you dont want to change</p>
+    </form>
+  </div>
+  <div class="profile-card js-profile-card" [ngClass]="{ blur: form_visible }">
+    <span
+      class="profile-card__edit material-symbols-outlined"
+      (click)="toggleFormProfile()"
+      >edit</span
+    >
+    <div
+      class="profile-card__img"
+      [ngClass]="{
+        'online-status': user && user.status === 1,
+        'offline-status': user && user.status === 0,
+        'ingame-status': user && user.status === 2
+      }"
+    >
+      <img [src]="user && user.avatar" alt="profile card" />
+    </div>
+
+    <div class="profile-card__cnt js-profile-cnt">
+      <div class="profile-card__name">
+        {{ user && user.username }}
+      </div>
+
+      <div class="profile-card-inf">
+        <div class="profile-card-inf__item">
+          <div class="profile-card-inf__title profile-card-inf-games">
+            {{ stats && stats.wins + stats.losses }}
+          </div>
+          <div class="profile-card-inf__txt">Games</div>
+        </div>
+
+        <div class="profile-card-inf__item">
+          <div class="profile-card-inf__title profile-card-inf-wins">
+            {{ stats && stats.wins }}
+          </div>
+          <div class="profile-card-inf__txt">Wins</div>
+        </div>
+
+        <div class="profile-card-inf__item">
+          <div class="profile-card-inf__title profile-card-inf-losses">
+            {{ stats && stats.losses }}
+          </div>
+          <div class="profile-card-inf__txt">Losses</div>
+        </div>
+
+        <div class="profile-card-inf__item">
+          <div
+            class="profile-card-inf__title"
+            [ngClass]="
+              stats &&
+              (stats.wins + stats.losses !== 0
+                ? stats.wins / (stats.wins + stats.losses) < 0.5
+                  ? 'profile-card-inf-negative-ratio'
+                  : 'profile-card-inf-positive-ratio'
+                : 'profile-card-inf-neutral-ratio')
+            "
+          >
+            {{
+              stats && stats.wins + stats.losses !== 0
+                ? (stats.wins / (stats.wins + stats.losses) | percent : "1.0-1")
+                : "-"
+            }}
+          </div>
+          <div class="profile-card-inf__txt">Winrate</div>
+        </div>
+      </div>
+      <div class="profile-card-ctr" *ngIf="user">
+        <button
+          routerLink="/history"
+          [queryParams]="{ id: user.id }"
+          class="profile-card__button button--blue js-message-btn"
+        >
+          Game History
+        </button>
+        <button
+          routerLink="/profile/friend-requests"
+          class="profile-card__button button--orange js-message-btn"
+        >
+          Friend requests
+          {{ nb_friend_requests > 0 ? "(" + nb_friend_requests + ")" : "" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<div class="container-global">
+    <h1>Ranking</h1>
+    <div class="container" *ngIf="userStats">
+      <h2 *ngFor="let userStat of userStats;let indexOfelement=index;">
+        <div class="profile-card__cnt js-profile-cnt">
+            <div class="profile-card__name">Rank : {{indexOfelement + 1}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ userStat.user && userStat.user.username }}</div>
+            <div class="profile-card-inf">
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-games">
+                  {{ userStat.stat && userStat.stat.wins + userStat.stat.losses }}
+                </div>
+                <div class="profile-card-inf__txt">Games</div>
+              </div>
+      
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-wins">
+                  {{ userStat.stat && userStat.stat.wins }}
+                </div>
+                <div class="profile-card-inf__txt">Wins</div>
+              </div>
+      
+              <div class="profile-card-inf__item">
+                <div class="profile-card-inf__title profile-card-inf-losses">
+                  {{ userStat.stat && userStat.stat.losses }}
+                </div>
+                <div class="profile-card-inf__txt">Losses</div>
+              </div>
+      
+              <div class="profile-card-inf__item">
+                <div
+                  class="profile-card-inf__title"
+                  [ngClass]="
+                    userStat.stat && userStat.stat.wins + userStat.stat.losses !== 0
+                      ? userStat.stat.wins / (userStat.stat.wins + userStat.stat.losses) < 0.5
+                        ? 'profile-card-inf-negative-ratio'
+                        : 'profile-card-inf-positive-ratio'
+                      : 'profile-card-inf-positive-ratio'
+                  "
+                >
+                  {{
+                    userStat.stat && userStat.stat.wins + userStat.stat.losses !== 0
+                      ? (userStat.stat.wins / (userStat.stat.wins + userStat.stat.losses) | percent : "1.0-1")
+                      : "-"
+                  }}
+                </div>
+                <div class="profile-card-inf__txt">Winrate</div>
+              </div>
+            </div>
+        </div>
+    </h2>
+</div>
+</div>
