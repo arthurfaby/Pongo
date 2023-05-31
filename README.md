@@ -2,7 +2,7 @@
 
 Pongo is a online pong game website.
 
-##Technical stack
+## Technical stack
 
 Frontend :
   - Angular
